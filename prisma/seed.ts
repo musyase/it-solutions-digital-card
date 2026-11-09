@@ -12,15 +12,49 @@ const projects = [
     id: 'zapix',
     name: 'Zapix',
     description:
-      'Собственная SaaS CRM на TypeScript, NestJS, PostgreSQL и Prisma. Реализованы авторизация, роли, изоляция данных компаний, онлайн-запись, уведомления и фоновые задачи.',
+      'Собственная CRM для онлайн-записи. Пишу backend на TypeScript, NestJS, Prisma и PostgreSQL. Есть авторизация, роли, изоляция данных компаний, уведомления и фоновые задачи.',
     url: 'https://zapixapp.ru',
+  },
+  {
+    id: 'student-ai-checker',
+    name: 'Student AI Checker',
+    description:
+      'Прототип проверки студенческих работ на Python. Разбирает DOCX, запускает Qwen через Ollama, обрабатывает работы пакетами. Есть очередь ручной проверки.',
+    url: 'https://github.com/musyase/student-ai-checker',
   },
   {
     id: 'stav-electroset-app',
     name: 'Android-приложение для АО «Ставэлектросеть»',
     description:
-      'Дипломный проект на Java: Room, Retrofit, OkHttp, Gson, Jsoup, авторизация, профиль пользователя и административный раздел.',
+      'Дипломный проект на Java. Использовал Room, Retrofit, OkHttp, Gson и Jsoup; есть авторизация, профиль и раздел администратора.',
     url: 'https://github.com/musyase/stav-electroset-app',
+  },
+];
+
+const experience = [
+  {
+    id: '00-zapix',
+    company: 'Zapix (собственный проект)',
+    position: 'Разработчик',
+    period: 'действующий проект',
+    achievements:
+      'Разрабатываю CRM для онлайн-записи на TypeScript, NestJS, Prisma и PostgreSQL. Сделал авторизацию, роли, изоляцию данных компаний, уведомления и фоновые задачи.',
+  },
+  {
+    id: '01-stgau',
+    company: 'Ставропольский государственный аграрный университет',
+    position: 'Преподаватель разработки мобильных приложений',
+    period: 'с сентября 2026 года',
+    achievements:
+      'Преподаю основы Java и Kotlin более чем 100 студентам, готовлю учебные материалы и практические задания.',
+  },
+  {
+    id: '02-stavelektroset',
+    company: 'АО «Ставэлектросеть»',
+    position: 'Практикант отдела АСУП',
+    period: 'с 2023 по 2026 год, семь практик',
+    achievements:
+      'Сделал программу для заполнения рабочих документов; ей пользовались несколько отделов, от 20 до 30 сотрудников. Вместе с наставником дорабатывал БД и внутреннее ПО.',
   },
 ];
 
@@ -28,6 +62,12 @@ async function main(): Promise<void> {
   await prisma.profile.upsert({
     where: { id: 'kirill' },
     update: {
+      description:
+        'Разрабатываю Zapix, CRM на NestJS и PostgreSQL. Преподаю основы мобильной разработки на Java и Kotlin. Во время практики в «Ставэлектросети» занимался автоматизацией рабочих документов.',
+      experience: {
+        deleteMany: {},
+        create: experience,
+      },
       projects: {
         deleteMany: {},
         create: projects,
@@ -37,7 +77,7 @@ async function main(): Promise<void> {
       id: 'kirill',
       name: 'Кирилл Колнооченко',
       description:
-        'Начинающий backend-разработчик. Самостоятельно развиваю SaaS CRM Zapix и создаю инструменты автоматизации на Python. Преподаю основы мобильной разработки на Java и Kotlin.',
+        'Разрабатываю Zapix, CRM на NestJS и PostgreSQL. Преподаю основы мобильной разработки на Java и Kotlin. Во время практики в «Ставэлектросети» занимался автоматизацией рабочих документов.',
       githubUrl: 'https://github.com/musyase',
       skills: {
         create: [
@@ -52,26 +92,7 @@ async function main(): Promise<void> {
           { id: 'git', name: 'Git', category: 'Базовый уровень' },
         ],
       },
-      experience: {
-        create: [
-          {
-            id: '01-stgau',
-            company: 'Ставропольский государственный аграрный университет',
-            position: 'Преподаватель разработки мобильных приложений',
-            period: 'с сентября 2026',
-            achievements:
-              'Преподаю основы Java и Kotlin более чем 100 студентам, готовлю учебные материалы и практические задания.',
-          },
-          {
-            id: '02-stavelektroset',
-            company: 'АО «Ставэлектросеть»',
-            position: 'Практикант отдела АСУП',
-            period: '2023–2026, семь учебных и производственных практик',
-            achievements:
-              'Разработал локальную автоматизацию заполнения документов для нескольких отделов; инструмент использовали ориентировочно 20–30 сотрудников. Дорабатывал БД и внутреннее ПО вместе с наставником.',
-          },
-        ],
-      },
+      experience: { create: experience },
       projects: { create: projects },
     },
   });
