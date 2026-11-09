@@ -13,7 +13,7 @@ docker compose up --build
 После сообщения о запуске откройте **http://localhost:3000/graphql**. На странице доступен Apollo Sandbox. Для проверки из терминала:
 
 ```bash
-npm run smoke
+docker compose exec app npm run smoke
 ```
 
 Пример запроса в Sandbox:
