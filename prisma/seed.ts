@@ -7,10 +7,32 @@ if (!connectionString) throw new Error('DATABASE_URL is required');
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
 
+const projects = [
+  {
+    id: 'zapix',
+    name: 'Zapix',
+    description:
+      'Собственная SaaS CRM на TypeScript, NestJS, PostgreSQL и Prisma. Реализованы авторизация, роли, изоляция данных компаний, онлайн-запись, уведомления и фоновые задачи.',
+    url: 'https://zapixapp.ru',
+  },
+  {
+    id: 'stav-electroset-app',
+    name: 'Android-приложение для АО «Ставэлектросеть»',
+    description:
+      'Дипломный проект на Java: Room, Retrofit, OkHttp, Gson, Jsoup, авторизация, профиль пользователя и административный раздел.',
+    url: 'https://github.com/musyase/stav-electroset-app',
+  },
+];
+
 async function main(): Promise<void> {
   await prisma.profile.upsert({
     where: { id: 'kirill' },
-    update: {},
+    update: {
+      projects: {
+        deleteMany: {},
+        create: projects,
+      },
+    },
     create: {
       id: 'kirill',
       name: 'Кирилл Колнооченко',
@@ -50,24 +72,7 @@ async function main(): Promise<void> {
           },
         ],
       },
-      projects: {
-        create: [
-          {
-            id: 'zapix',
-            name: 'Zapix',
-            description:
-              'Действующий собственный SaaS CRM на TypeScript, NestJS, PostgreSQL и Prisma. Реализованы авторизация, роли, изоляция данных компаний, онлайн-запись, уведомления и фоновые задачи.',
-            url: 'https://zapixapp.ru',
-          },
-          {
-            id: 'student-ai-checker',
-            name: 'Student AI Checker',
-            description:
-              'Работающий прототип проверки студенческих работ: Python, Qwen через Ollama, обработка DOCX, Pydantic, JSON Schema, пакетная обработка и pytest.',
-            url: 'https://github.com/musyase/student-ai-checker',
-          },
-        ],
-      },
+      projects: { create: projects },
     },
   });
 }
