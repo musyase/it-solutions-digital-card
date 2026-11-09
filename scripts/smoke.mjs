@@ -24,4 +24,5 @@ assert.equal(body.data.profile.name, 'Кирилл Колнооченко');
 assert.ok(body.data.profile.skills.some((skill) => skill.name === 'TypeScript'));
 assert.ok(body.data.profile.experience.length >= 2);
 assert.ok(body.data.profile.projects.some((project) => project.name === 'Zapix'));
+assert.ok(body.data.profile.projects.some((project) => project.name === 'Zapix' && project.url === 'https://zapixapp.ru'));
 console.log('GraphQL smoke check passed: profile and nested data are available.');

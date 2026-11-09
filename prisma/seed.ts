@@ -10,7 +10,14 @@ const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) })
 async function main(): Promise<void> {
   await prisma.profile.upsert({
     where: { id: 'kirill' },
-    update: {},
+    update: {
+      projects: {
+        updateMany: {
+          where: { id: 'zapix' },
+          data: { url: 'https://zapixapp.ru' },
+        },
+      },
+    },
     create: {
       id: 'kirill',
       name: 'Кирилл Колнооченко',
@@ -57,7 +64,7 @@ async function main(): Promise<void> {
             name: 'Zapix',
             description:
               'Действующий собственный SaaS CRM на TypeScript, NestJS, PostgreSQL и Prisma. Реализованы авторизация, роли, изоляция данных компаний, онлайн-запись, уведомления и фоновые задачи.',
-            url: 'https://github.com/musyase/zapix',
+            url: 'https://zapixapp.ru',
           },
           {
             id: 'student-ai-checker',
@@ -70,6 +77,7 @@ async function main(): Promise<void> {
       },
     },
   });
+
 }
 
 main()
