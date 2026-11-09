@@ -10,14 +10,7 @@ const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) })
 async function main(): Promise<void> {
   await prisma.profile.upsert({
     where: { id: 'kirill' },
-    update: {
-      projects: {
-        updateMany: {
-          where: { id: 'zapix' },
-          data: { url: 'https://zapixapp.ru' },
-        },
-      },
-    },
+    update: {},
     create: {
       id: 'kirill',
       name: 'Кирилл Колнооченко',
@@ -77,7 +70,6 @@ async function main(): Promise<void> {
       },
     },
   });
-
 }
 
 main()
